@@ -2,117 +2,198 @@ let express = require('express');
 let router = express.Router();
 
 let database = require('../database.js');
-let RemindersModel = require('../schema/reminders.js')
-// const app = express()
-//   const port = 3000
+let StoryModel = require('../schema/story.js')
 
-//call API
+// const app = express()
+//const port = 3000
+
+
+/*
 router.get('/', function(req, res, next) {
   console.log("doing a get")
-  RemindersModel
+  StoryModel
     .find({
 
     })
     .then(doc => {
-      let sendingtasks = [];
-      for(let i=0; i < doc.length; i++) {
-        sendingtasks.push(doc[i].task)
-        if (doc[i].check === "X") {
-          sendingtasks.push(doc[i].check)
-        }
-      }
-      console.log('sending:', sendingtasks)
-      res.send(sendingtasks)
+      //change back to []?
+
+      //bring this into front end and send all of doc
+
+
+      // let sendingSS = [];
+      // for(let i=0; i < doc.length; i++) {
+      //   sendingSS.push(doc[i].savestorysection)
+      //
+      // }
+      // console.log('sending:', savestorysection);
+
+      res.send(doc)
+
 
     })
     .catch(err => {
       console.error(err)
     })
-})
-
-
-//posting new items
-router.put('/', function(req, res, next) {
-  console.log("doing a put")
-  let newItem = new RemindersModel ({
-    task: req.body.itemName,
-    //update for default check position
-  })
-
-  newItem.save()
-    .then(doc => {
-      res.send("Item added")
-      console.log(doc)
-    })
-    .catch(err => {
-      console.error(err)
-    })
-
-})
-
-
-//adding checks
-router.post('/', function(req, res, next) {
-  console.log("doing a put")
-  RemindersModel
-    let newCheck = ({
-      check: req.body.squareX,
-    })
-
-    newCheck.save()
-      .then(doc => {
-        res.send("Check added")
-        console.log(doc)
-      })
-      .catch(err => {
-        console.error(err)
-      })
-
-
-
-  /*
-  let newCheck = new RemindersModel ({
-    check: req.body.squareX,
-
-  })
-  */
-
-
-
-})
-
-/*
-router.delete('/', function(req, res, next) {
-  console.log("doing a delete")
-
-  // let deleteItem = new RemindersModel ({
-  //   //task: req.body.itemName,
-  //   task: req.body.items,
-  // })
-
-  newItem.save()
-    .then(doc => {
-      res.send("Item deleted")
-      console.log(doc)
-    })
-    .catch(err => {
-      console.error(err)
-    })
-
 })
 */
 
-//deleting items
+//ORIGINAL
+
+
+router.get('/', function(req, res, next) {
+  console.log("doing a get")
+  StoryModel
+    .find({
+
+    })
+    .then(doc => {
+      //change back to []?
+
+      //bring this into front end and send all of doc
+
+
+      let sendingtasks = [];
+      for(let i=0; i < doc.length; i++) {
+        sendingtasks.push(doc[i].storysection)
+      
+      }
+      console.log('sending:', sendingtasks);
+
+
+
+      // let sendingSS = [];
+      // for(let i=0; i < doc.length; i++) {
+      //   sendingSS.push(doc[i].savestorysection)
+      //
+      // }
+      // console.log('sending:', savestorysection);
+
+
+
+      res.send(sendingtasks)
+      //res.send({'found': doc})
+      //res.send(sendingSS)
+      //res.end()
+      //res.send(sendingtasks)
+
+    })
+    .catch(err => {
+      console.error(err)
+    })
+})
+
+
+//EDITING HERE
+/*
+router.get('/', function(req, res, next) {
+  console.log("doing a get")
+  StoryModel
+    .find({
+
+    })
+    .then(doc => {
+      //change back to []?
+
+      //bring this into front end and send all of doc
+
+
+      let sendingtasks = [];
+      for(let i=0; i < doc.length; i++) {
+        sendingtasks.push(doc[i].storysection)
+
+      }
+      console.log('sending:', sendingtasks);
+
+
+
+      // let sendingSS = [];
+      // for(let i=0; i < doc.length; i++) {
+      //   sendingSS.push(doc[i].savestorysection)
+      //
+      // }
+      // console.log('sending:', savestorysection);
+
+
+
+      //res.send(sendingtasks)
+      res.send({'found': sendingtasks})
+      //res.send(sendingSS)
+      //res.end()
+      //res.send(sendingtasks)
+
+    })
+    .catch(err => {
+      console.error(err)
+    })
+})
+*/
+
+
+//take out testAPI if put starts not working
+
+router.put('/', function(req, res, next) {
+  console.log("doing a put")
+  let newSection = new StoryModel ({
+    storysection: req.body.input,
+    //update for default check position
+    // charactercheck: req.body.charactercheck,
+    // highlighted: req.body.highlighted,
+    // unhighlighted: req.body.unhighlighted,
+
+    //savestorysection: req.body.charactercheck,
+  })
+
+  newSection.save()
+    .then(doc => {
+      res.send("Story Section added")
+      console.log(doc)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
+})
+
+
+
+router.post('/', function(req, res, next) {
+  console.log("doing a post")
+  let saveStorySection = new StoryModel ({
+    savestorysection: req.body.charactercheck,
+    //savestorysection: req.body.savedStories,
+    //update for default check position
+  })
+
+  saveStorySection.save()
+    .then(doc => {
+      res.send("Story Section added")
+      console.log("This is the value of savestorysection:", doc)
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
+})
+
+
+
+
+
 router.delete('/', function(req, res, next) {
-  console.log("doing a delete: ", req.body.items)
+  console.log("doing a delete: ", req.body.story)
 
-      RemindersModel
+      StoryModel
 
-        .findOneAndRemove({
-          //task: req.body.itemName,
+        .find({
 
-          task: req.body.item,
-          //console.log("deleting the item")
+          //storysection: req.body.storyString,
+          storysection: req.body.story,
+          //storysection: req.body.charactercheck,
+
+        })
+        .remove({
+
         })
         .then(response => {
           console.log(response)
@@ -130,60 +211,43 @@ router.delete('/', function(req, res, next) {
           console.error(err)
         })
 
+        /*
+        .findOneAndRemove({
+
+
+          //storysection: req.body.story,
+
+        })
+        .then(response => {
+          console.log(response)
+
+          // let sendingtasks = [];
+          // for(let i=0; i < response.length; i++) {
+          //   sendingtasks.push(doc[i].task)
+          // }
+          // res.send(sendingtasks)
+
+          res.send(response)
+
+        })
+        .catch(err => {
+          console.error(err)
+        })
+
+        */
+
 
 
 
 })
 
-/*
 
-router.delete('/', function(req, res, next) {
-  console.log("doing a delete")
-  RemindersModel
 
-    .findOneAndRemove({
-      //task: req.body.itemName
+//router.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-      task: req.body.items,
-      //console.log("deleting the item")
-    })
-    .then(response => {
-      console.log(response)
-      //let sendingtasks = [];
-      // for(let i=0; i < response.length; i++) {
-      //   sendingtasks.push(doc[i].task)
-      // }
-      //res.send(sendingtasks)
-      res.send(response)
 
-    })
-    .catch(err => {
-      console.error(err)
-    })
+router.get('/', function(req,res,next) {
+  res.send('API is working properly');
 })
-
-*/
-
-
-//______________________________________________________________________________
-
-// app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
-// let db = {
-//   //come back to this later if code isnt working
-//   items: ["thing1", "thing2"],
-//   squares: Array(9).fill(null),
-// }
-
-// router.get('/', function (req, res, next) {
-//     console.log('get happened')
-//     res.send(db);
-//
-// });
-//
-// router.post('/', function(req, res, next){
-//   db = req.body;
-//   res.send(db)
-// })
 
 module.exports = router;
